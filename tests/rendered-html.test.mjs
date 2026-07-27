@@ -107,8 +107,9 @@ test("apps directory exposes Comfy App View links without hosting the runtime", 
   assert.equal(appShare.headers.get("location"), "https://cloud.comfy.org/apps/create-image");
   const missingAppShare = await request("/api/share/apps/app_animate-image");
   assert.equal(missingAppShare.status, 409);
-  const unverifiedViralAppShare = await request("/api/share/apps/app_viral_float-spin");
-  assert.equal(unverifiedViralAppShare.status, 409);
+  const floatSpinViralAppShare = await request("/api/share/apps/app_viral_float-spin", { redirect: "manual" });
+  assert.equal(floatSpinViralAppShare.status, 302);
+  assert.equal(floatSpinViralAppShare.headers.get("location"), "https://cloud.comfy.org/?share=acff0561888a");
   const verifiedViralAppShare = await request("/api/share/apps/app_viral_sticker-peel", { redirect: "manual" });
   assert.equal(verifiedViralAppShare.status, 302);
   assert.equal(verifiedViralAppShare.headers.get("location"), "https://cloud.comfy.org/?share=8187173ab139");

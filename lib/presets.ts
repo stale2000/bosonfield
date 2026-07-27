@@ -1,4 +1,5 @@
 import { promptForPreset, type ViralPromptSpec } from "./viral-prompts";
+import { localComfyAppLinks } from "./local-comfy-app-links";
 
 export type ViralPreset = {
   id: string;
@@ -28,13 +29,7 @@ export const viralPresetCatalog: ViralPreset[] = names.map((name, index) => ({
   premium: index % 7 === 0,
   workflowId: name === "Sketch to Fabric" ? "viral-sketch-to-fabric" : index % 3 === 1 ? "video-motion" : "video-vibe-motion",
   graphId: name === "Earth Zoom" ? "viral-earth-zoom" : name === "Float Spin" ? "viral-float-spin" : name === "Sticker Peel" ? "viral-sticker-peel" : name === "Ice Statue" ? "viral-ice-statue" : name === "Sketch to Fabric" ? "viral-sketch-to-fabric" : undefined,
-  comfyAppUrl: name === "Sticker Peel"
-      ? "https://cloud.comfy.org/?share=8187173ab139"
-      : name === "Ice Statue"
-        ? "https://cloud.comfy.org/?share=b63c2c6a693c"
-        : name === "Sketch to Fabric"
-          ? "https://cloud.comfy.org/?share=674f97d9c785"
-        : undefined,
+  comfyAppUrl: localComfyAppLinks[`preset_${slugify(name)}`],
   imageInput: true,
   promptSpec: promptForPreset(name),
   defaults: { presetId: name, mode: "Viral preset", duration: index % 2 === 0 ? 5 : 8, ratio: "9:16" },
